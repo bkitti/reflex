@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Reflex test app</string>
+    <string name="password">Jelszo</string>
+    <string name="name">Nev</string>
+    <string name="login">Bejelentkezes</string>
+    <string name="registration">Regisztracio</string>
+    <string name="userName">Felhasznalonev</string>
+    <string name="email_address">Email cim</string>
+    <string name="password_again">Jelszo megerositese</string>
+    <string name="cancel">Megse</string>
+</resources>
