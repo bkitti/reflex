@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1017882569176",
+    "project_id": "reflex-test-687b6",
+    "storage_bucket": "reflex-test-687b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017882569176:android:b791f55ed26e65bf176aad",
+        "android_client_info": {
+          "package_name": "com.example.reflex_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017882569176-6d6l9ulmtttvc6d72aedkgqo6t8ivpo0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reflex_test",
+            "certificate_hash": "a75834be60d9e280e94d0ed6b19b54ee06b3ed73"
+          }
+        },
+        {
+          "client_id": "1017882569176-8ihbpjeu3tbjbmjp9s5u29tqcn0c7q3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW8XPsxVqcYHHBGk2gEqASDCIngf4Hedo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017882569176-8ihbpjeu3tbjbmjp9s5u29tqcn0c7q3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
