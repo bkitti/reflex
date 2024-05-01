@@ -82,7 +82,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        drawUPS(canvas);
+        // drawUPS(canvas);
         drawPoints(canvas);
         player.draw(canvas);
         for (Obstacle obstacle : obstacles) {

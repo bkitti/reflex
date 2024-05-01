@@ -47,16 +47,13 @@ public class MainActivity extends AppCompatActivity {
         String userName = userNameEt.getText().toString();
         String password = passwordEt.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(LOG_TAG, "User logged in successfully");
-                    startGame();
-                } else {
-                    Log.d(LOG_TAG, "User login failed", task.getException());
-                    Toast.makeText(MainActivity.this, "User login failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.d(LOG_TAG, "User logged in successfully");
+                startGame();
+            } else {
+                Log.d(LOG_TAG, "User login failed", task.getException());
+                Toast.makeText(MainActivity.this, "User login failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -74,16 +71,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginAsGuest(View view) {
-        mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(LOG_TAG, "Anonym user logged in successfully");
-                    startGame();
-                } else {
-                    Log.d(LOG_TAG, "Anonym user login failed", task.getException());
-                    Toast.makeText(MainActivity.this, "Anonym user login failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        mAuth.signInAnonymously().addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.d(LOG_TAG, "Anonym user logged in successfully");
+                startGame();
+            } else {
+                Log.d(LOG_TAG, "Anonym user login failed", task.getException());
+                Toast.makeText(MainActivity.this, "Anonym user login failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

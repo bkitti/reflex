@@ -67,16 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(LOG_TAG, "User registered successfully");
-                            startGame();
-                        } else {
-                            Log.d(LOG_TAG, "User registration failed", task.getException());
-                            Toast.makeText(RegisterActivity.this, "User registration failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(LOG_TAG, "User registered successfully");
+                        startGame();
+                    } else {
+                        Log.d(LOG_TAG, "User registration failed", task.getException());
+                        Toast.makeText(RegisterActivity.this, "User registration failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

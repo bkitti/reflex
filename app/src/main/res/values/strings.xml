@@ -9,6 +9,7 @@
     <string name="password_again">Jelszo megerositese</string>
     <string name="cancel">Megse</string>
     <string name="guest_login">Bejelentkezes vendegkent</string>
-    <string name="google_login">Bejelentkezes Google fiokkal</string>
     <string name="game">Game</string>
+    <string name="startNewGame">Start new game</string>
+    <string name="score">Score</string>
 </resources>
