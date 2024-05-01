@@ -1,98 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
     <TextView
         android:id="@+id/registrationTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="@string/registration"
-        android:textSize="24sp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/userNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints="Name"
         android:ems="10"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:hint="@string/userName"
-        android:inputType="textPersonName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/registrationTextView"
-        android:autofillHints="Name" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/userEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:hint="@string/email_address"
         android:inputType="textEmailAddress"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/userNameEditText"
         android:autofillHints="Email" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/userEmailEditText"
         android:autofillHints="Password" />
 
     <EditText
         android:id="@+id/passwordAgainEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:hint="@string/password_again"
         android:inputType="textPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/passwordEditText"
         android:autofillHints="Password again" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/passwordAgainEditText"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         >
+
         <Button
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registration"
             android:onClick="register"
-            />
+            android:text="@string/registration" />
+
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
@@ -102,4 +85,5 @@
             android:onClick="cancel"
             />
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>
