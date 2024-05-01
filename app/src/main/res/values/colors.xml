@@ -2,5 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="player">#1AF6F6</color>
+    <color name="player">#A9E5BB</color>
+    <color name="obstacle1">#3425FF</color>
 </resources>

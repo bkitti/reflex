@@ -35,5 +35,12 @@
         android:text="@string/login"
         android:layout_marginTop="20dp"
         android:onClick="login" />
+    <Button
+        android:id="@+id/guestLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="loginAsGuest"
+        android:layout_marginTop="20dp"
+        android:text="@string/guest_login" />
 
 </LinearLayout>

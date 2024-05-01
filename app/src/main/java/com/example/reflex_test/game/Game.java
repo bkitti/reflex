@@ -15,12 +15,19 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public Game(Context context) {
         super(context);
+
+        double MAX_X = context.getResources().getDisplayMetrics().widthPixels;
+        double MAX_Y = context.getResources().getDisplayMetrics().heightPixels;
+
         getHolder().addCallback(this);
 
         gameLoop = new GameLoop(this, getHolder());
 
-        player = new Player(getContext(), 500, 500, 30);
-        obstacle = new Obstacle(getContext(), 600, 600, 30);
+        double playerSize = MAX_X/40;
+        player = new Player(getContext(), MAX_X/10, playerSize, playerSize);
+
+        double obstacleSize = MAX_X/20;
+        obstacle = new Obstacle(getContext(), MAX_X-400, MAX_Y-400, 10, (float) obstacleSize);
 
         setFocusable(true);
     }
