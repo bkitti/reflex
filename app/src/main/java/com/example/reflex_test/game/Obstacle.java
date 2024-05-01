@@ -5,14 +5,13 @@ import android.graphics.Canvas;
 
 import com.example.reflex_test.R;
 
-public class Player extends GameObject {
+public class Obstacle extends GameObject {
     private static final int DEFAULT_SPEED = 20;
     private double radius;
 
-    public Player(Context context, double positionX, double positionY, double radius) {
+    public Obstacle(Context context, double positionX, double positionY, double radius) {
         super(context, positionX, positionY, DEFAULT_SPEED, R.color.player);
         this.radius = radius;
-        this.speed = DEFAULT_SPEED;
     }
     public void draw(Canvas canvas) {
         // Draw the player
@@ -22,10 +21,4 @@ public class Player extends GameObject {
     public void update() {
     }
 
-    public void slowDown() {
-        speed = DEFAULT_SPEED/2;
-    }
-    public void speedUp() {
-        speed = DEFAULT_SPEED;
-    }
 }

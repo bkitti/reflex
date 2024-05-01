@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private Player player;
+    private Obstacle obstacle;
 
     public Game(Context context) {
         super(context);
@@ -19,6 +20,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this, getHolder());
 
         player = new Player(getContext(), 500, 500, 30);
+        obstacle = new Obstacle(getContext(), 600, 600, 30);
 
         setFocusable(true);
     }
@@ -57,10 +59,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawUPS(canvas);
         player.draw(canvas);
+        obstacle.draw(canvas);
     }
 
     public void update() {
         player.update();
+        obstacle.update();
     }
 
     public void drawUPS(Canvas canvas) {
