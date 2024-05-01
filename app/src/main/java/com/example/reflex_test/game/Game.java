@@ -16,11 +16,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private Player player;
     private List<Obstacle> obstacles;
+    double MAX_X;
 
     public Game(Context context) {
         super(context);
 
-        double MAX_X = context.getResources().getDisplayMetrics().widthPixels;
+        MAX_X = context.getResources().getDisplayMetrics().widthPixels;
         double MAX_Y = context.getResources().getDisplayMetrics().heightPixels;
 
         getHolder().addCallback(this);
@@ -34,7 +35,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacles = new ArrayList<>();
         for (int i=0; i<10; i++) {
-            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/2, MAX_Y/2-obstacleSize/2, 10, (float) obstacleSize));
+            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/2, MAX_Y/2-obstacleSize/2, 15, (float) obstacleSize));
         }
 
         setFocusable(true);
@@ -73,6 +74,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawUPS(canvas);
+        drawPoints(canvas);
         player.draw(canvas);
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(canvas);
@@ -89,6 +91,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         while (iterator.hasNext()) {
             Obstacle obstacle = iterator.next();
             if (GameObject.isColliding(obstacle, player)) {
+                player.addPoints(-obstacle.getSpeed());
+                iterator.remove();
+            } else if (obstacle.isFinished()) {
+                player.addPoints(obstacle.getSpeed());
                 iterator.remove();
             }
         }
@@ -101,6 +107,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(color);
         paint.setTextSize(70);
         canvas.drawText(averageUPS, 20, 80, paint);
+    }
+
+    public void drawPoints (Canvas canvas) {
+        String points = "Points: " + player.getPoints();
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(getContext(), android.R.color.holo_blue_light);
+        paint.setColor(color);
+        paint.setTextSize(70);
+        canvas.drawText(points, (float) (MAX_X/2), 80, paint);
     }
 
 }

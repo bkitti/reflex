@@ -9,6 +9,7 @@ public class Player extends GameObject {
     private static final int DEFAULT_SPEED = 20;
     private double radius;
     private boolean upDirection = false;
+    private int points = 0;
 
     public Player(Context context, double positionX, double positionY, double radius) {
         super(context, positionX, positionY, DEFAULT_SPEED, R.color.player);
@@ -34,7 +35,7 @@ public class Player extends GameObject {
     }
 
     public void slowDown() {
-        speed = DEFAULT_SPEED/2;
+        speed = DEFAULT_SPEED/3;
     }
     public void speedUp() {
         speed = DEFAULT_SPEED;
@@ -42,5 +43,13 @@ public class Player extends GameObject {
 
     public double getRadius() {
         return radius;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int point) {
+        points += point;
     }
 }

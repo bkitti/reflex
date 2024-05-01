@@ -7,6 +7,7 @@ import com.example.reflex_test.R;
 
 public class Obstacle extends GameObject {
     private float size;
+    private boolean isFinished = false;
 
     public Obstacle(Context context, double positionX, double positionY, int speed, float size) {
         super(context, positionX, positionY, speed, R.color.obstacle1);
@@ -18,11 +19,22 @@ public class Obstacle extends GameObject {
     }
 
     public void update() {
-        if (positionX <= 0-size*2) return;
+        if (positionX <= 0-size*2) {
+            isFinished = true;
+            return;
+        }
         positionX -= speed;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
     }
 
     public double[] getSizes() {
         return new double[]{size*2, size};
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }
