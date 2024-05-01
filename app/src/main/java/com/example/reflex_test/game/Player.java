@@ -39,4 +39,8 @@ public class Player extends GameObject {
     public void speedUp() {
         speed = DEFAULT_SPEED;
     }
+
+    public double getRadius() {
+        return radius;
+    }
 }

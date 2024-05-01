@@ -22,4 +22,7 @@ public class Obstacle extends GameObject {
         positionX -= speed;
     }
 
+    public double[] getSizes() {
+        return new double[]{size*2, size};
+    }
 }

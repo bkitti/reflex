@@ -8,10 +8,14 @@ import android.view.SurfaceView;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private Player player;
-    private Obstacle obstacle;
+    private List<Obstacle> obstacles;
 
     public Game(Context context) {
         super(context);
@@ -27,7 +31,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player = new Player(getContext(), MAX_X/10, playerSize, playerSize);
 
         double obstacleSize = MAX_X/20;
-        obstacle = new Obstacle(getContext(), MAX_X-400, MAX_Y-400, 10, (float) obstacleSize);
+
+        obstacles = new ArrayList<>();
+        for (int i=0; i<10; i++) {
+            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/2, MAX_Y/2-obstacleSize/2, 10, (float) obstacleSize));
+        }
 
         setFocusable(true);
     }
@@ -66,12 +74,24 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawUPS(canvas);
         player.draw(canvas);
-        obstacle.draw(canvas);
+        for (Obstacle obstacle : obstacles) {
+            obstacle.draw(canvas);
+        }
     }
 
     public void update() {
         player.update();
-        obstacle.update();
+        for (Obstacle obstacle : obstacles) {
+            obstacle.update();
+        }
+
+        Iterator<Obstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            Obstacle obstacle = iterator.next();
+            if (GameObject.isColliding(obstacle, player)) {
+                iterator.remove();
+            }
+        }
     }
 
     public void drawUPS(Canvas canvas) {

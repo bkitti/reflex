@@ -25,6 +25,15 @@ public abstract class GameObject {
         paint.setColor(ContextCompat.getColor(context, color));
     }
 
+    public static boolean isColliding(Obstacle obstacle, Player player) {
+        double[] obstacleSizes = obstacle.getSizes();
+        double radius = player.getRadius();
+        return player.positionX + radius > obstacle.positionX &&
+                player.positionX - radius < obstacle.positionX + obstacleSizes[0] &&
+                player.positionY + radius > obstacle.positionY &&
+                player.positionY - radius < obstacle.positionY + obstacleSizes[1];
+    }
+
     public abstract void draw(Canvas canvas);
 
     public abstract void update();
