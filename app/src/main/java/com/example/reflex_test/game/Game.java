@@ -17,12 +17,16 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private Player player;
     private List<Obstacle> obstacles;
     double MAX_X;
+    double MAX_Y;
+    private boolean isGameOver = false;
+    private OnGameEventListener listeners;
+    private int highScore = 0;
 
     public Game(Context context) {
         super(context);
 
         MAX_X = context.getResources().getDisplayMetrics().widthPixels;
-        double MAX_Y = context.getResources().getDisplayMetrics().heightPixels;
+        MAX_Y = context.getResources().getDisplayMetrics().heightPixels;
 
         getHolder().addCallback(this);
 
@@ -34,8 +38,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         double obstacleSize = MAX_X/20;
 
         obstacles = new ArrayList<>();
-        for (int i=0; i<10; i++) {
-            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/2, MAX_Y/2-obstacleSize/2, 15, (float) obstacleSize));
+        double[] positions = new double[]{MAX_Y/6, 2*MAX_Y/6, 3*MAX_Y/6, 4*MAX_Y/6, 5*MAX_Y/6};
+        for (int i=0; i<20; i++) {
+            double randomPosition = positions[(int) (Math.random()*5)];
+            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/1.5, randomPosition-obstacleSize/2, 15, (float) obstacleSize));
         }
 
         setFocusable(true);
@@ -45,6 +51,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent (android.view.MotionEvent event) {
         switch (event.getAction()) {
             case android.view.MotionEvent.ACTION_DOWN:
+                if (isGameOver) {
+                    exitGame();
+                }
                 player.slowDown();
                 return true;
             case android.view.MotionEvent.ACTION_UP:
@@ -79,6 +88,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(canvas);
         }
+        if (isGameOver) {
+            drawGameOver(canvas);
+        }
     }
 
     public void update() {
@@ -98,6 +110,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 iterator.remove();
             }
         }
+
+        if (obstacles.isEmpty()) {
+            gameOver();
+        }
+    }
+
+    private void gameOver() {
+        isGameOver = true;
     }
 
     public void drawUPS(Canvas canvas) {
@@ -111,11 +131,42 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void drawPoints (Canvas canvas) {
         String points = "Points: " + player.getPoints();
+        if (highScore > 0) {
+            points += " High Score: " + highScore;
+        }
         Paint paint = new Paint();
         int color = ContextCompat.getColor(getContext(), android.R.color.holo_blue_light);
         paint.setColor(color);
         paint.setTextSize(70);
-        canvas.drawText(points, (float) (MAX_X/2), 80, paint);
+        canvas.drawText(points, (float) (MAX_X/3), 80, paint);
     }
 
+    public void drawGameOver(Canvas canvas) {
+        String gameOver = "Game Over";
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(getContext(), android.R.color.holo_red_dark);
+        paint.setColor(color);
+        paint.setTextSize(150);
+        canvas.drawText(gameOver, (float) (MAX_X/4), (float) (MAX_Y/2), paint);
+    }
+
+    public void exitGame() {
+        gameLoop.stopLoop();
+        if (listeners != null) {
+            listeners.onGameEnd(player.getPoints());
+        }
+        getHolder().getSurface().release();
+    }
+
+    public void addOnGameEventListener(Game.OnGameEventListener listeners) {
+        this.listeners = listeners;
+    }
+
+    public void setActualHighScore(int actualHighScore) {
+        this.highScore = actualHighScore;
+    }
+
+    public abstract static class OnGameEventListener {
+        public abstract void onGameEnd(int score);
+    }
 }
