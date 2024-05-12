@@ -22,6 +22,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private OnGameEventListener listeners;
     private int highScore = 0;
 
+    private int life;
+
     public Game(Context context) {
         super(context);
 
@@ -38,13 +40,26 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         double obstacleSize = MAX_X/20;
 
         obstacles = new ArrayList<>();
-        double[] positions = new double[]{MAX_Y/6, 2*MAX_Y/6, 3*MAX_Y/6, 4*MAX_Y/6, 5*MAX_Y/6};
-        for (int i=0; i<20; i++) {
-            double randomPosition = positions[(int) (Math.random()*5)];
-            obstacles.add(new Obstacle(getContext(), MAX_X + i*MAX_X/1.5, randomPosition-obstacleSize/2, 15, (float) obstacleSize));
+        life = 10;
+        setFocusable(true);
+    }
+
+    private void createObstacle(int ticks) {
+        if (obstacles.size() > 4) {
+            return;
         }
 
-        setFocusable(true);
+        // time spent with the game
+        int secondsElapsed = (int) (ticks / GameLoop.MAX_UPS); // 1 second = 60 ticks
+        int speed = 15 + secondsElapsed/2;
+
+        double obstacleSize = MAX_X/20;
+        double randomPosition = MAX_Y/6 + (int) (Math.random()*5)*MAX_Y/6;
+
+        double lastObstaclePosition = obstacles.isEmpty() ? MAX_X : obstacles.get(obstacles.size()-1).positionX;
+        double diff = MAX_X/1.5;
+
+        obstacles.add(new Obstacle(getContext(), lastObstaclePosition + diff, randomPosition-obstacleSize/2, speed, (float) obstacleSize));
     }
 
     @Override
@@ -93,7 +108,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public void update() {
+    public void update(int ticks) {
         player.update();
         for (Obstacle obstacle : obstacles) {
             obstacle.update();
@@ -105,14 +120,21 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             if (GameObject.isColliding(obstacle, player)) {
                 player.addPoints(-obstacle.getSpeed());
                 iterator.remove();
+                life--;
             } else if (obstacle.isFinished()) {
                 player.addPoints(obstacle.getSpeed());
                 iterator.remove();
             }
         }
 
-        if (obstacles.isEmpty()) {
+        if (life <= 0) {
             gameOver();
+            obstacles.clear();
+            return;
+        }
+
+        if (!isGameOver) {
+            createObstacle(ticks);
         }
     }
 

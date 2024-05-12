@@ -5,12 +5,13 @@ import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread {
     // UPS = update per second
-    private static final double MAX_UPS = 60.0;
+    public static final double MAX_UPS = 60.0;
     private static final double UPS_PERIOD = 1000.0/MAX_UPS;
     private boolean isRunning = false;
     private final Game game;
     private final SurfaceHolder holder;
     private double averageUPS;
+    private int totalUpdateCount = 0;
 
     GameLoop(Game game, SurfaceHolder holder) {
         this.game = game;
@@ -41,8 +42,9 @@ public class GameLoop extends Thread {
             try {
                 canvas = holder.lockCanvas();
                 synchronized (holder) {
-                    game.update();
+                    game.update(totalUpdateCount);
                     updateCount++;
+                    totalUpdateCount++;
                     game.draw(canvas);
                 }
             } catch (IllegalArgumentException e) {
@@ -69,8 +71,9 @@ public class GameLoop extends Thread {
             }
             // if sleeptime < 0, update needed
             if (sleepTime < 0 && updateCount < MAX_UPS - 1) { // guarantee the max ups
-                game.update();
+                game.update(totalUpdateCount);
                 updateCount++;
+                totalUpdateCount++;
                 elapsedTime = System.currentTimeMillis() - startTime;
                 sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
             }
